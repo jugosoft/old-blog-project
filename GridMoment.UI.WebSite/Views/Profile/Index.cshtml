@@ -1,0 +1,61 @@
+﻿@model GridMoment.UI.WebSite.Models.ProfileShowNameViewModel
+@{
+    ViewBag.Title = "Profile: " + Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";    
+}
+
+<head>   
+    <link href="~/Styles/profile.css" rel="stylesheet" />
+    <link href="~/Styles/libs/bootstrap.css" rel="stylesheet" />
+    <link href="~/Styles/libs/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Styles/Loading.css" rel="stylesheet" />
+</head>
+<body>  
+            <p></p>
+            <section class="container-fluid" style="margin-top:110px;">
+                <div class="row">
+                    <div class="col-xs-2">
+                         <img class="ratio img-responsive img-circle" src="@Url.Action("ShowAvatar", "Account", new { name = User.Identity.Name })" alt="Ваша фотография" />
+                    </div>
+                    <div class="col-xs-7 some-margin">@Model.Name</div>
+                    
+                    <div class="col-xs-7"><small>@Model.City</small></div>
+                    <div class="col-xs-7">Должность на сайте - @foreach(var item in Model.Role)
+                    {
+                        <small> @item _</small>
+                    }
+                        </div>
+                </div>
+
+                <p></p>
+                <!--Здесь записи польз. и избранное-->
+                <ul class="nav nav-tabs row centered">
+                    <li class="active col-xs-5 center-text"><a data-toggle="tab" href="#panel1">Записи @Model.Name</a></li>
+                    <li class="col-xs-7 center-text"><a data-toggle="tab" href="#panel2">Избранное</a></li>
+                </ul>
+                <!--промежуток должен быть-->
+                <p> </p>
+                <div class="tab-content">
+                    <!--Понель номеро уно-->
+                    <div id="panel1" class="tab-pane fade in active">
+                        @Html.Action("ShowUserNews", "Post", new { modelName = User.Identity.Name })
+                    </div>
+                    <!--Понель закладок-->
+                    <div id="panel2" class="tab-pane fade">
+                        @Html.Action("ShowUserBookmarks", "Post", new { modelName = User.Identity.Name })
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4">
+                            <div class="block center-block" id="loading"><img src="~/Content/Images/Nofotogif.gif"></div>
+                        </div>
+                        <div class="col-xs-4"></div>
+                    </div>
+                </div>
+            </section>
+           
+    <script src="~/Scripts/jquery-2.2.0.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/UserPartialLoading.js"></script>
+       
+</body>
